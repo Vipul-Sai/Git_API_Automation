@@ -12,7 +12,7 @@ log = customLogger()
 Today = datetime.datetime.now().strftime("%H-%M-%S")
 repoName = "git_flow_task" + Today
 header = {
-    'Authorization': 'Bearer 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',
+    'Authorization': '<Peronal access Token>',
     'Accept': 'application/vnd.github+json',
     'X-GitHub-Api-Version': '2022-11-28'
 }
