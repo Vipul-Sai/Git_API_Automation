@@ -12,7 +12,7 @@ log = customLogger()
 Today = datetime.datetime.now().strftime("%H-%M-%S")
 repoName = "git_flow_task" + Today
 header = {
-    'Authorization': 'Bearer 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',
+    'Authorization': 'Bearer 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',
     'Accept': 'application/vnd.github+json',
     'X-GitHub-Api-Version': '2022-11-28'
 }
@@ -21,8 +21,7 @@ shaCodeUpdate = None
 
 class Gitflow(unittest.TestCase):
 
-    @pytest.mark.order(1)
-    def get_user(self):
+    def user_login(self):
         end_point = "user"
         url = readConfig('url', 'web_url')+end_point
         response = requests.get(url, headers=header)
@@ -46,8 +45,7 @@ class Gitflow(unittest.TestCase):
         else:
             assert False
 
-    @pytest.mark.order(2)
-    def post_create_repos(self):
+    def create_repository(self):
         end_point = 'user/repos'
         url = readConfig('url', 'web_url')+end_point
         file = open('Data/create_repo.json', 'r')
@@ -74,8 +72,7 @@ class Gitflow(unittest.TestCase):
         print(repoName)
     print(repoName)
 
-    @pytest.mark.order(3)
-    def put_main_branch(self):
+    def create_branch_main(self):
         print(repoName)
         end_point = "repos/Vipul-Sai/"+ str(repoName) +"/contents/main"
         print(end_point)
@@ -99,8 +96,7 @@ class Gitflow(unittest.TestCase):
 
 
 
-    @pytest.mark.order(4)
-    def createBranch_Post(self):
+    def create_branch(self):
          # Create Branch using sha
 
         print(str(shaCode))
@@ -119,8 +115,7 @@ class Gitflow(unittest.TestCase):
             log.info("Branch created")
         else:
             assert False
-    @pytest.mark.order(5)
-    def createFileInBranch(self):
+    def create_file_in_branch(self):
         end_point = "repos/Vipul-Sai/"+repoName +"/contents/feature/git_flow_feature"
         url = readConfig("url", "web_url") + end_point
         print(url)
@@ -143,7 +138,6 @@ class Gitflow(unittest.TestCase):
         print(shaCodeUpdate)
 
 
-    @pytest.mark.order(6)
     def pull_request(self):
         end_point = "repos/Vipul-Sai/"+repoName +"/pulls"
         url = readConfig("url", "web_url") + end_point
@@ -160,8 +154,7 @@ class Gitflow(unittest.TestCase):
         else:
             assert False
 
-    @pytest.mark.order(7)
-    def updateFileinBranch(self):
+    def update_file_in_branch(self):
         end_point = "repos/Vipul-Sai/"+repoName +"/contents/feature/git_flow_feature"
         url = readConfig("url", "web_url") + end_point
         print(url)
@@ -169,12 +162,32 @@ class Gitflow(unittest.TestCase):
         json_file =  json.loads(file.read())
         json_file['sha'] = shaCodeUpdate
 
-
         response =  requests.put(url, headers=header, json=json_file)
         print(response.status_code)
         if response.status_code == 200:
             assert True
             log.info("File updated in branch")
+        else:
+            assert False
+
+    def rename_branch(self):
+        end_point = "repos/Vipul-Sai/" + str(repoName) + "/branches/feature/git_flow_feature/rename"
+        url = readConfig("url", "web_url") + end_point
+        file = open('Data/rename_branch.json','r')
+        json_file = json.loads(file.read())
+        response = requests.post(url,headers=header,json=json_file)
+        if response.status_code == 201:
+            assert True
+        else:
+            assert False
+
+    def delete_repo(self):
+        end_point = "repos/Vipul-Sai/TesterWorld"
+        url = readConfig("url", "web_url") + end_point
+        response =  requests.delete(url,headers=header)
+        print(response.status_code)
+        if response.status_code==204:
+            assert True
         else:
             assert False
 

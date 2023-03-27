@@ -7,10 +7,12 @@ class Git(unittest.TestCase):
 
     def test_git(self):
         g = Gitflow()
-        g.get_user()
-        g.post_create_repos()
-        g.put_main_branch()
-        g.createBranch_Post()
-        g.createFileInBranch()
+        g.user_login()
+        g.create_repository()
+        g.create_branch_main()
+        g.create_branch()
+        g.create_file_in_branch()
         g.pull_request()
-        g.updateFileinBranch()
+        g.update_file_in_branch()
+        g.rename_branch()
+        g.delete_repo()

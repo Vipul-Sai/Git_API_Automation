@@ -7,7 +7,7 @@ def customLogger():
     logName = inspect.stack()[1][3]  # used to get the class/methode name from where logger methode called
     logger = logging.getLogger(logName)  # creating logging object to pass the logname
     logger.setLevel(logging.DEBUG)  # set log level
-    fileHandler = logging.FileHandler('/home/vipulsai/PycharmProjects/Git_Assignment/Logs/'+time.strftime("%d-%m-%y")+'.text', mode='a')  # create file handler to save the file
+    fileHandler = logging.FileHandler('/home/vipulsai/PycharmProjects/Git_API_Automation/Logs'+time.strftime("%d-%m-%y")+'.text', mode='a')  # create file handler to save the file
     fileHandler.setLevel(logging.DEBUG)  # set log level to file handler
     # create logging formate
     formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s : %(message)s",
